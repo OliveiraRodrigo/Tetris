@@ -2,54 +2,73 @@ package tetris;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import javax.sound.sampled.*;
 
 /** @author UFPel - POO - Grupo 1 - 2011 */
 
 public class Som {
     
+    private AudioInputStream stream[] = new AudioInputStream[10];
+    private AudioFormat format;
+    private Clip clip;
+    private Boolean mute = false;
+    
     public void tocaAudio(int seleciona){  
+    // This method does not return until the audio file is completely loaded  
+        
+        if (!mute){
+        
         try {
-            //audios que fazem parte do jogo  
-            AudioInputStream stream1 = AudioSystem.getAudioInputStream(new File("linha.wav"));
-            AudioInputStream stream2 = AudioSystem.getAudioInputStream(new File("gira.wav"));
             
-            // definicao
-            AudioFormat format = stream1.getFormat();  
+                stream[0] = AudioSystem.getAudioInputStream(new File("anda.wav"));
+                stream[1] = AudioSystem.getAudioInputStream(new File("linha.wav"));
+                stream[2] = AudioSystem.getAudioInputStream(new File("gira.wav"));
+                stream[3] = AudioSystem.getAudioInputStream(new File("lado.wav"));
+                stream[4] = AudioSystem.getAudioInputStream(new File("desce.wav"));
+                stream[5] = AudioSystem.getAudioInputStream(new File("fixa.wav"));
+                stream[6] = AudioSystem.getAudioInputStream(new File("trunfo.wav"));
+                stream[7] = AudioSystem.getAudioInputStream(new File("fim.wav"));
+                
+                // definicao
+                format = stream[0].getFormat();
+                if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
+                    format = new AudioFormat(  
+                        AudioFormat.Encoding.PCM_SIGNED,  
+                        format.getSampleRate(),  
+                        format.getSampleSizeInBits()*2,  
+                        format.getChannels(),  
+                        format.getFrameSize()*2,  
+                        format.getFrameRate(),  
+                        true);        // big endian
+                }
+                
+                // Create the clip  
+                DataLine.Info info = new DataLine.Info(  
+                    Clip.class, stream[0].getFormat(), ((int)stream[0].getFrameLength()*format.getFrameSize()));  
+                clip = (Clip) AudioSystem.getLine(info);
 
-            if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-                format = new AudioFormat(  
-                    AudioFormat.Encoding.PCM_SIGNED,  
-                    format.getSampleRate(),  
-                    format.getSampleSizeInBits()*2,  
-                    format.getChannels(),  
-                    format.getFrameSize()*2,  
-                    format.getFrameRate(),  
-                    true);        // big endian
-                stream1 = AudioSystem.getAudioInputStream(format, stream1);  
-                stream2 = AudioSystem.getAudioInputStream(format, stream2);  
-            }
-            // Create the clip  
-            DataLine.Info info = new DataLine.Info(  
-                Clip.class, stream1.getFormat(), ((int)stream1.getFrameLength()*format.getFrameSize()));  
-            Clip clip = (Clip) AudioSystem.getLine(info);
-
-            // This method does not return until the audio file is completely loaded  
-            if (seleciona == 1){
-                clip.open(stream1);
-            }
-            else if (seleciona == 2){
-                clip.open(stream2);
-            }
+                for (int i=0; i<=7; i++){
+                    stream[i] = AudioSystem.getAudioInputStream(format, stream[i]);
+                }
             
-            // Start playing
-            clip.start();
+                clip.open(stream[seleciona]);
+                
+                // Start playing
+                clip.start();
 
-        } catch (MalformedURLException e) {
-        } catch (IOException e) {
-        } catch (LineUnavailableException e) {
-        } catch (UnsupportedAudioFileException e) {
+            } catch (UnsupportedAudioFileException e) {
+            } catch (IOException e) {
+            } catch (LineUnavailableException e) {
+            }
+        }
+    }
+    
+    public void mute(){
+        if (mute){
+            mute = false;
+        }
+        else{
+            mute = true;
         }
     }
 }

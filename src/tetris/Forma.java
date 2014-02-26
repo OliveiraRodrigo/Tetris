@@ -65,6 +65,7 @@ public class Forma {
         linhaFinal = 0;
         especial = false;
         delay = 30;
+        som = new Som();
     }
 
     public void limpaCor() {
@@ -111,36 +112,47 @@ public class Forma {
 
     /** Alterna o atributo 'orientacao' entre as orientações possíveis. */
     public void gira() {
-        //som.tocaAudio(2);
-        if(orientacao == posicoes)
+        if(orientacao == posicoes) {
              orientacao = 1;
-        else orientacao++;
+        }
+        else {
+            orientacao++;
+        }
         lateralBk = lateral;
+        som.tocaAudio(2);
     }
     
     public void giraAnti() {
-        if(orientacao == 1)
+        if(orientacao == 1) {
              orientacao = posicoes;
-        else orientacao--;
+        }
+        else {
+            orientacao--;
+        }
         lateral = lateralBk;
     }
 
     /** Move a peça para a esquerda.
      *  Método genérico que considera apenas o atributo 'lateral'. */
     public void praEsquerda() {
-        if(lateral>0)
+        if(lateral>0) {
             lateral--;
+            som.tocaAudio(3);
+        }
     }
 
     /** Move a peça para a direita.
      *  Método genérico que considera apenas os atributos 'lateral' e 'lateralMax'. */
     public void praDireita() {
-        if(lateral<lateralMax)
+        if(lateral<lateralMax) {
             lateral++;
+            som.tocaAudio(3);
+        }
     }
 
     public void praBaixo() {
         delay = 1;
+        som.tocaAudio(4);
     }
 
     public void posiciona() {

@@ -10,6 +10,7 @@ public class Executar1 implements Runnable {
 
     protected Tela tela;
     //protected Timer timer;
+    private Som som;
     protected char pecaAtual;
     protected char pecaNext;
     protected boolean fixar = false;
@@ -21,6 +22,7 @@ public class Executar1 implements Runnable {
         try {
             while(true) {
                 tela = new Tela();
+                som = new Som();
                 try {
                     tela.pontuacao = new Pontuacao();
                     tela.pontuacao.recuperaPontuacao();
@@ -70,7 +72,6 @@ public class Executar1 implements Runnable {
                             repete--;
                         }
                         
-                        
                         /** Se o jogo acabou, solicita o nome
                          * do jogador para o ranking */
                         if(tela.jogo1.gameOver() || tela.novo) {
@@ -82,6 +83,9 @@ public class Executar1 implements Runnable {
                             if(!tela.novo) {
                                 System.exit(0);
                             }
+                        }
+                        if(tela.jogo1.formaAtual.delay >= 15){
+                            som.tocaAudio(0);
                         }
                     }
                     

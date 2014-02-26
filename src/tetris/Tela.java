@@ -2,11 +2,10 @@ package tetris;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-//import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 //import javax.swing.JInternalFrame;
 
@@ -284,6 +283,9 @@ public class Tela extends JFrame implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 jogo1.usaTrunfo();
+                break;
+            case KeyEvent.VK_M:
+                jogo1.som.mute();
                 break;
             case KeyEvent.VK_T:
                 jogo1.trollar();

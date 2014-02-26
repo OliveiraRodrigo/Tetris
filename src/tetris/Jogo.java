@@ -1,7 +1,7 @@
 package tetris;
 
-import java.util.Random;
 import java.awt.Color;
+import java.util.Random;
 
 /** @author UFPel - POO - Grupo 1 - 2011 */
 
@@ -12,7 +12,7 @@ public class Jogo {
     protected Forma formaAtual;
     protected Forma formaNext;
     private Color corNeutra;
-    private Som som;
+    protected Som som;
     private Timer timer;
     protected int trunfo;
     protected boolean[][] registro;
@@ -29,6 +29,7 @@ public class Jogo {
         fundo = new Grade(corNeutra);
         formaAtual = new Forma(corNeutra);
         formaNext = new Forma(corNeutra);
+        som = new Som();
         trunfo = 3;
         registro = new boolean[4][10];
         praLeft = false;
@@ -202,6 +203,7 @@ public class Jogo {
                 }
             }
         }
+        //som.tocaAudio(5);
         return true;
     }
 
@@ -288,6 +290,7 @@ public class Jogo {
                 }
             }
         }
+        //som.tocaAudio(5);
     }
 
     /** Retorna se o jogo está pausado ou não */
@@ -320,7 +323,7 @@ public class Jogo {
 
         if(linhaCheia) {
             quantidade = 1 + copiaLinhas(linha);
-            //som.tocaAudio(1);
+            som.tocaAudio(1);
         }
         
         return quantidade + linhasCompletas(linha-1);
@@ -364,6 +367,7 @@ public class Jogo {
             if(trunfo>0) {
                 trunfo--;
                 formaNext = new I(corNeutra);
+                som.tocaAudio(6);
             }
         }
     }
@@ -379,6 +383,7 @@ public class Jogo {
     public boolean gameOver() {
         for(int j=9; j>=0; j--) {
             if(fundo.matrix[1][j] != corNeutra) {
+                som.tocaAudio(7);
                 return true;
             }
         }

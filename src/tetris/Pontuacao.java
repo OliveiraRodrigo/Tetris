@@ -187,23 +187,23 @@ public class Pontuacao implements Serializable {
         try {
             outputStream = new PrintWriter(new FileWriter("Ranking.txt"));
             
-            outputStream.println("=============== TETRIS ================");
-            outputStream.println();
-            outputStream.println("                Ranking");
-            outputStream.println();
-            outputStream.println("---------------------------------------");
-            outputStream.println("Jogador\t\tPontos\t\tDuração");
-            outputStream.println("---------------------------------------");
-            outputStream.println();
+            outputStream.println("=============== TETRIS ================\r");
+            outputStream.println("\r");
+            outputStream.println("                Ranking\r");
+            outputStream.println("\r");
+            outputStream.println("---------------------------------------\r");
+            outputStream.println("Jogador\t\tPontos\t\tDuração\r");
+            outputStream.println("---------------------------------------\r");
+            outputStream.println("\r");
             
             for(int i=0; i<contaJogadores; i++) {
                 outputStream.println(ranking[i][0] + "\t"+("[" + ranking[i][1] +
-                    "]                ").substring(0, 16)+"[" + ranking[i][2] + "]");
+                    "]                ").substring(0, 16)+"[" + ranking[i][2] + "]\r");
             }
             
-            outputStream.println();
-            outputStream.println("=======================================");
-            outputStream.println();
+            outputStream.println("\r");
+            outputStream.println("=======================================\r");
+            outputStream.println("\r");
             outputStream.println("Rodrigo Oliveira");
             
             outputStream.close();
